@@ -7,19 +7,19 @@ import sqlite3
 from starlette.responses import RedirectResponse
 
 # Skapa databas
-# databasen är bara i ram, lätt att ändra till filsökvög om man vill så att det ligger kvar efter omstart.
+# databasen är bara i ram, lätt att ändra till filsökväg om man vill så att det ligger kvar efter omstart.
 conn = sqlite3.connect(':memory:', check_same_thread=False)
-# Skapa en tabell i databasen för att spara tempraturer
+# Skapa en tabell i databasen för att spara tempraturer, denna behöver bara köras när man skapar en ny databas.
 conn.cursor().execute('''CREATE TABLE temps
              (ts timestamp, location text, temp real)''')
-# när man jobbar mot databas så måsta man "commita" Det är samma som att spara ändringarna man gjort hittills.
+# när man jobbar mot databas så måsta man köra "commit" för att spara ändringarna man gjort hittills.
 conn.commit()
 
-# Skapa webserver appen som vi kan registrera "REST-sökvägarna på nedan.
+# Skapa webbserver-appen som vi kan registrera REST-sökvägarna på nedan.
 app = FastAPI()
 
 # Se till att statiska filer kan hittas på webbservern under /static (där vi har index.html)
-app.mount("/static", StaticFiles(directory="static", html=True), name="/")
+app.mount("/static", StaticFiles(directory="static", html=True), name="static")
 
 
 # Denna är bara så att man kan gå mot http://127.0.0.1:8000 i browser och skickas vidare till startsidan.
@@ -39,7 +39,7 @@ def set_temp(location: str, temp: float):
 
 
 # Denna hämtar de sparade tempraturerna, används av javascript på webbsidan.
-# returnerar ett Json-sträng som ser ut liknande detta:
+# returnerar en Json-sträng som ser ut liknande detta:
 #  {"tempratures": [
 #    {"timestamp":"2020-05-19 23:22:25.860707","location":"sovrum","temp":21.2},
 #    {"timestamp":"2020-05-19 23:22:23.378780","location":"sovrum2","temp":21.2}

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Tempraturer</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $.ajax({
+                url: "/tempraturer"
+            }).then(function(data) {
+
+                data.tempratures.forEach(function(item) {
+                    $('#temp-list').append(
+                        '<li>' + item.timestamp + ' Plats: ' + item.location + " Tempratur: " + item.temp + '</li>');
+
+                });
+            });
+        });
+    </script>
+</head>
+
+<body>
+<div>
+    <h1>Tempraturer</h1>
+    <ul id="temp-list">
+        <!-- Här fylls tempraturer på -->
+
+    </ul>
+</div>
+</body>
+</html>

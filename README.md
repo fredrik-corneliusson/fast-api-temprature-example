@@ -1,4 +1,6 @@
-# Minimalt exempel för att spara och visa tempraturer
+# Minimalt exempel för att spara och visa tempraturer 
+Skapat för att lära ut grunder i python webbprogrammering.
+
 ## Installation
 Testat med python 3.7.
 
